@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,9 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.do_an.R;
-import com.example.do_an.model.UserInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,50 +26,48 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class NapTienActivity extends AppCompatActivity {
-    TextView soduviNT, iddataNT, soduViMomo;
+public class WithdrawMoneyActivity extends AppCompatActivity {
+    TextView soduviNT, soduviXem, iddataRT;
     Button btnt;
     ImageButton backLogin1;
     private String date, hour;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nap_tien);
+        setContentView(R.layout.activity_rut_tien);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         SharedPreferences sharedPreferences = getSharedPreferences("my_phone", Context.MODE_PRIVATE);
         String phoneNumber = sharedPreferences.getString("PHONE_NUMBER", "");
-        soduViMomo = findViewById(R.id.soduViMomo);
-        iddataNT = findViewById(R.id.iddataNT);
-        btnt = findViewById(R.id.btNT);
-        soduviNT = findViewById(R.id.soduviNT);
+
+        iddataRT = findViewById(R.id.iddataRT);
+        btnt = findViewById(R.id.btRT);
+        soduviNT = findViewById(R.id.soduviRT);
+        soduviXem = findViewById(R.id.soduviXem);
         backLogin1 = findViewById(R.id.backLogin1);
         getInfo(phoneNumber);
         btnt.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SuspiciousIndentation")
             @Override
             public void onClick(View view) {
                 date = getCurrentDateAsString();
                 hour = getCurrentTime();
-                String iddata = iddataNT.getText().toString();
+                String iddata = iddataRT.getText().toString();
                 String price = soduviNT.getText().toString();
                 if(soduviNT.getText() == null)
-                    Toast.makeText(NapTienActivity.this, "Chưa nhập số tiền cần nạp", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WithdrawMoneyActivity.this, "Chưa nhập số tiền cần rút", Toast.LENGTH_SHORT).show();
                 else{
                     int sodu = Integer.parseInt(String.valueOf(soduviNT.getText()));
-                    if(sodu < 10000)
-                        Toast.makeText(NapTienActivity.this, "Nạp tối thiểu 10.000đ", Toast.LENGTH_SHORT).show();
-                    else
-                        updateToFireStore(phoneNumber,sodu);
-                        updateNotification(iddata, price, date, hour);
+                    updateToFireStore(phoneNumber,sodu);
+                    updateNotification(iddata, price, date, hour);
                 }
             }
         });
         backLogin1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {finish();}
+            public void onClick(View view) {
+                finish();
+            }
         });
-
     }
     private String getCurrentDateAsString() {
         // Lấy ngày và giờ hiện tại
@@ -94,6 +89,8 @@ public class NapTienActivity extends AppCompatActivity {
 
         return currentTime;
     }
+
+
     private void updateToFireStore(String id, int sodu) {
         FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
@@ -109,24 +106,28 @@ public class NapTienActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         long currentSoDu = document.getLong("soDuVi").intValue();
-                        long newSoDu = currentSoDu + sodu;
-                        // Cập nhật số dư mới vào Firestore
-                        userRef.update("soDuVi", newSoDu)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(NapTienActivity.this, "Nạp tiền thành công", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(NapTienActivity.this, "Lỗi khi nạp tiền: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        if(currentSoDu < sodu)
+                            Toast.makeText(WithdrawMoneyActivity.this, "Số tiền rút lớn hơn số dư", Toast.LENGTH_SHORT).show();
+                        else {
+                            long newSoDu = currentSoDu - sodu;
+                            // Cập nhật số dư mới vào Firestore
+                            userRef.update("soDuVi", newSoDu)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(WithdrawMoneyActivity.this, "Rút tiền thành công", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(WithdrawMoneyActivity.this, "Lỗi khi rút tiền: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                        }
                     } else {
-                        Toast.makeText(NapTienActivity.this, "Không tìm thấy người dùng", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WithdrawMoneyActivity.this, "Không tìm thấy người dùng", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(NapTienActivity.this, "Lỗi khi truy cập dữ liệu: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WithdrawMoneyActivity.this, "Lỗi khi truy cập dữ liệu: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -144,9 +145,9 @@ public class NapTienActivity extends AppCompatActivity {
                             if (document.exists()) {
                                 long sodu = document.getLong("soDuVi");
                                 if (sodu >= 1000)
-                                    soduViMomo.setText(String.format("%,d", sodu) + "đ"); // Định dạng số dư thành chuỗi có dấu chấm làm dấu phân cách hàng nghìn
+                                    soduviXem.setText("Số dư ví: " + String.format("%,d", sodu) + "đ"); // Định dạng số dư thành chuỗi có dấu chấm làm dấu phân cách hàng nghìn
                                 else
-                                    soduViMomo.setText(String.valueOf(sodu)); // Định dạng số dư thành chuỗi có dấu chấm làm dấu phân cách hàng nghìn
+                                    soduviXem.setText(String.valueOf(sodu)); // Định dạng số dư thành chuỗi có dấu chấm làm dấu phân cách hàng nghìn
                             }
                         }
                     }
@@ -165,12 +166,13 @@ public class NapTienActivity extends AppCompatActivity {
 
         db.collection("TransactionInfo").add(notificationMap)
                 .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(NapTienActivity.this, "Thông tin đã được đẩy lên Firebase", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WithdrawMoneyActivity.this, "Rút tiền thành công", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(NapTienActivity.this, "Lỗi khi đẩy thông tin lên Firebase: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WithdrawMoneyActivity.this, "Lỗi khi đẩy thông tin lên Firebase: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
     public String formatCurrency(int amount) {
         String currency = String.format("%,d", amount); // Định dạng số nguyên thành chuỗi có dấu chấm làm dấu phân cách hàng nghìn
         return currency + " Đ"; // Thêm ký hiệu tiền tệ vào chuỗi
@@ -184,5 +186,4 @@ public class NapTienActivity extends AppCompatActivity {
             return "Invalid amount";
         }
     }
-
 }

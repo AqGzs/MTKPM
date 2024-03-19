@@ -20,13 +20,13 @@ import android.widget.TextView;
 import com.example.do_an.R;
 import com.example.do_an.model.ThongBaoModel;
 import com.example.do_an.model.UserInfo;
-import com.example.do_an.ui.ChuyenTienActivity;
+import com.example.do_an.ui.TransferMoneyActivity;
 import com.example.do_an.ui.DataActivity;
 import com.example.do_an.ui.EnterSdtActivity;
-import com.example.do_an.ui.NapTienActivity;
+import com.example.do_an.ui.RechargeActivity;
 import com.example.do_an.ui.PersonalPageActivity;
-import com.example.do_an.ui.RutTienActivity;
-import com.example.do_an.ui.ThongbaoActivity;
+import com.example.do_an.ui.WithdrawMoneyActivity;
+import com.example.do_an.ui.NotificationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -65,28 +65,28 @@ public class HomeFragment extends Fragment {
         naptien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), NapTienActivity.class);
+                Intent intent = new Intent(getActivity(), RechargeActivity.class);
                 startActivity(intent);
             }
         });
         rutTien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), RutTienActivity.class);
+                Intent intent = new Intent(getActivity(), WithdrawMoneyActivity.class);
                 startActivity(intent);
             }
         });
         chuyenTien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ChuyenTienActivity.class);
+                Intent intent = new Intent(getActivity(), TransferMoneyActivity.class);
                 startActivity(intent);
             }
         });
         thongbao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ThongbaoActivity.class);
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(intent);
             }
         });

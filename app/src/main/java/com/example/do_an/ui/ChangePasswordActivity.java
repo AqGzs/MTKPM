@@ -26,9 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     ImageButton backChangePass;
-    EditText oldPass, newPass, renewPass;
+    EditText matkhautruoc, matkhaumoi, matkhauthaymoi;
     Button xacnhan;
-    TextView quenPass2;
+    TextView quenMatKhau;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,18 +38,18 @@ public class ChangePasswordActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("my_phone", Context.MODE_PRIVATE);
         String phoneNumber = sharedPreferences.getString("PHONE_NUMBER", "");
         backChangePass = findViewById(R.id.backChangePass);
-        oldPass = findViewById(R.id.oldPass);
-        newPass = findViewById(R.id.newPass);
-        renewPass = findViewById(R.id.renewPass);
+        matkhautruoc = findViewById(R.id.oldPass);
+        matkhaumoi = findViewById(R.id.newPass);
+        matkhauthaymoi = findViewById(R.id.renewPass);
         xacnhan = findViewById(R.id.xacnhan);
-        quenPass2 = findViewById(R.id.quenPass2);
+        quenMatKhau = findViewById(R.id.quenPass2);
         backChangePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        quenPass2.setOnClickListener(new View.OnClickListener() {
+        quenMatKhau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChangePasswordActivity.this, RegisterActivity.class);
@@ -62,7 +62,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                UserInfo userInfo = new UserInfo("CN" + phoneNumber, Long.parseLong(String.valueOf(newPass.getText())));
+                UserInfo userInfo = new UserInfo("CN" + phoneNumber, Long.parseLong(String.valueOf(matkhaumoi.getText())));
                 updateToFireStore(userInfo, phoneNumber);
             }
         });
@@ -83,17 +83,17 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                 // Lấy mật khẩu hiện tại của người dùng từ cơ sở dữ liệu
                                 String currentPassword = document.getLong("MatKhau").toString();
 
-                                // Kiểm tra xem oldPass có khớp với mật khẩu hiện tại hay không
-                                if (oldPass.getText().toString().equals(currentPassword)) {
-                                    // oldPass khớp, thực hiện truy vấn cập nhật
-                                    if (oldPass.getText().toString().isEmpty() || newPass.getText().toString().isEmpty() || renewPass.getText().toString().isEmpty()) {
+                                // Kiểm tra xem matkhautruoc có khớp với mật khẩu hiện tại hay không
+                                if (matkhautruoc.getText().toString().equals(currentPassword)) {
+                                    // matkhautruoc khớp, thực hiện truy vấn cập nhật
+                                    if (matkhautruoc.getText().toString().isEmpty() || matkhaumoi.getText().toString().isEmpty() || matkhauthaymoi.getText().toString().isEmpty()) {
                                         Toast.makeText(ChangePasswordActivity.this, "Chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
-                                    } else if (newPass.getText().toString().equals(oldPass.getText().toString())) {
+                                    } else if (matkhaumoi.getText().toString().equals(matkhautruoc.getText().toString())) {
                                         Toast.makeText(ChangePasswordActivity.this, "Mật khẩu mới không được trùng với mật khẩu hiện tại", Toast.LENGTH_SHORT).show();
-                                    } else if (!newPass.getText().toString().equals(renewPass.getText().toString())) {
+                                    } else if (!matkhaumoi.getText().toString().equals(matkhauthaymoi.getText().toString())) {
                                         Toast.makeText(ChangePasswordActivity.this, "Mật khẩu mới không trùng khớp", Toast.LENGTH_SHORT).show();
 
-                                    } else if (newPass.getText().toString().length() < 6 || renewPass.getText().toString().length() < 6  || !newPass.getText().toString().matches("^[0-9]+$")) {
+                                    } else if (matkhaumoi.getText().toString().length() < 6 || matkhauthaymoi.getText().toString().length() < 6  || !matkhaumoi.getText().toString().matches("^[0-9]+$")) {
                                         Toast.makeText(ChangePasswordActivity.this, "Mật khẩu phải là 6 chữ số", Toast.LENGTH_SHORT).show();
 
                                     } else{
@@ -122,7 +122,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                     }
 
                                 } else {
-                                    // oldPass không khớp, hiển thị thông báo lỗi cho người dùng
+                                    // matkhautruoc không khớp, hiển thị thông báo lỗi cho người dùng
                                     Toast.makeText(ChangePasswordActivity.this, "Mật khẩu hiện tại không đúng", Toast.LENGTH_SHORT).show();
                                 }
                             }

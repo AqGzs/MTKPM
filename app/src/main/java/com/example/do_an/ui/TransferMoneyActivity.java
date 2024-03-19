@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class ChuyenTienActivity extends AppCompatActivity {
+public class TransferMoneyActivity extends AppCompatActivity {
     EditText sdtCT, soduviCT, ndCT;
     TextView iddataCT;
     Button btCT;
@@ -58,7 +58,7 @@ public class ChuyenTienActivity extends AppCompatActivity {
                 String amountStr = soduviCT.getText().toString();
 
                 if (phoneNumber.isEmpty() || amountStr.isEmpty()) {
-                    Toast.makeText(ChuyenTienActivity.this, "Chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransferMoneyActivity.this, "Chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
                 } else {
                     int amount = Integer.parseInt(amountStr);
                     transferMoney(phoneNumber1,phoneNumber, amount);
@@ -106,10 +106,10 @@ public class ChuyenTienActivity extends AppCompatActivity {
 
         db.collection("TransactionInfo").add(notificationMap)
                 .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(ChuyenTienActivity.this, "Chuyển tiền thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransferMoneyActivity.this, "Chuyển tiền thành công", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(ChuyenTienActivity.this, "Lỗi khi đẩy thông tin lên Firebase: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransferMoneyActivity.this, "Lỗi khi đẩy thông tin lên Firebase: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -137,18 +137,18 @@ public class ChuyenTienActivity extends AppCompatActivity {
                                                         // Now update receiver's balance
                                                         updateReceiverBalance(receiverPhoneNumber, amount);
                                                     } else {
-                                                        Toast.makeText(ChuyenTienActivity.this, "Chuyển tiền thất bại", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(TransferMoneyActivity.this, "Chuyển tiền thất bại", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
                                             });
                                 } else {
-                                    Toast.makeText(ChuyenTienActivity.this, "Số dư không đủ để thực hiện giao dịch", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(TransferMoneyActivity.this, "Số dư không đủ để thực hiện giao dịch", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(ChuyenTienActivity.this, "Không tìm thấy tài khoản chuyển tiền", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(TransferMoneyActivity.this, "Không tìm thấy tài khoản chuyển tiền", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(ChuyenTienActivity.this, "Lỗi khi truy vấn dữ liệu", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TransferMoneyActivity.this, "Lỗi khi truy vấn dữ liệu", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -174,17 +174,17 @@ public class ChuyenTienActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
-                                                    Toast.makeText(ChuyenTienActivity.this, "Chuyển tiền thành công", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(TransferMoneyActivity.this, "Chuyển tiền thành công", Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                    Toast.makeText(ChuyenTienActivity.this, "Chuyển tiền thất bại", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(TransferMoneyActivity.this, "Chuyển tiền thất bại", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
                             } else {
-                                Toast.makeText(ChuyenTienActivity.this, "Không tìm thấy tài khoản nhận tiền", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(TransferMoneyActivity.this, "Không tìm thấy tài khoản nhận tiền", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(ChuyenTienActivity.this, "Lỗi khi truy vấn dữ liệu", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TransferMoneyActivity.this, "Lỗi khi truy vấn dữ liệu", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

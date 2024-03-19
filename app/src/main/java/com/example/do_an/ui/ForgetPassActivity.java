@@ -24,8 +24,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
-public class QuenPassActivity extends AppCompatActivity {
-    ImageButton imbbackQuenPass;
+public class ForgetPassActivity extends AppCompatActivity {
+    ImageButton imbbackForgetPass;
     EditText edMK1, edMK3, edSDT1;
     Button btdone;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -38,7 +38,7 @@ public class QuenPassActivity extends AppCompatActivity {
         actionBar.hide();
         SharedPreferences sharedPreferences = getSharedPreferences("my_phone", Context.MODE_PRIVATE);
         String phoneNumber = sharedPreferences.getString("PHONE_NUMBER", "");
-        imbbackQuenPass = findViewById(R.id.imbbackQuenPass);
+        imbbackForgetPass = findViewById(R.id.imbbackQuenPass);
         btdone = findViewById(R.id.btdone);
         edMK1 = findViewById(R.id.edMK1);
         edMK3 = findViewById(R.id.edMK3);
@@ -47,7 +47,7 @@ public class QuenPassActivity extends AppCompatActivity {
 
         long Username = Long.parseLong(phoneNumber);
 
-        imbbackQuenPass.setOnClickListener(new View.OnClickListener() {
+        imbbackForgetPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -58,12 +58,12 @@ public class QuenPassActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (edMK1.getText().toString().isEmpty() || edMK3.getText().toString().isEmpty()) {
-                    Toast.makeText(QuenPassActivity.this, "Chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPassActivity.this, "Chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
                 } else if (!edMK1.getText().toString().equals(edMK3.getText().toString())) {
-                    Toast.makeText(QuenPassActivity.this, "Mật khẩu xác nhận không đúng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPassActivity.this, "Mật khẩu xác nhận không đúng", Toast.LENGTH_SHORT).show();
 
                 } else if (edMK1.getText().toString().length() < 6 || edMK3.getText().toString().length() < 6  || !edMK1.getText().toString().matches("^[0-9]+$")) {
-                    Toast.makeText(QuenPassActivity.this, "Mật khẩu phải là 6 chữ số", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPassActivity.this, "Mật khẩu phải là 6 chữ số", Toast.LENGTH_SHORT).show();
 
                 } else{
                     UserInfo userInfo = new UserInfo("CN" + Username, Long.parseLong(String.valueOf(edMK1.getText())));
@@ -83,18 +83,18 @@ public class QuenPassActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(QuenPassActivity.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(QuenPassActivity.this, LoginActivity.class);
+                            Toast.makeText(ForgetPassActivity.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ForgetPassActivity.this, LoginActivity.class);
                             intent.putExtra("PHONE_NUMBER", phoneNumber);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(QuenPassActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show(); // Khi lưu thất bại
+                            Toast.makeText(ForgetPassActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show(); // Khi lưu thất bại
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() { // Khi lưu thất bại
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(QuenPassActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgetPassActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -114,7 +114,7 @@ public class QuenPassActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             // User data saved successfully
-                            Toast.makeText(QuenPassActivity.this, "Đăng ký thành công", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ForgetPassActivity.this, "Đăng ký thành công", Toast.LENGTH_LONG).show();
                             // Now, save userInfo data to "UsersInfo" collection
                             HashMap<String, Object> userInfoMap = new HashMap<>();
                             userInfoMap.put("MaTTCN", userInfo.getMaTTCN()); // Replace with actual property names
@@ -128,13 +128,13 @@ public class QuenPassActivity extends AppCompatActivity {
                             db.collection("UsersInfo").document(userInfo.getMaTTCN()).set(userInfoMap);
 
                         } else {
-                            Toast.makeText(QuenPassActivity.this, "Đăng ký thất bại", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ForgetPassActivity.this, "Đăng ký thất bại", Toast.LENGTH_LONG).show();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(QuenPassActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgetPassActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

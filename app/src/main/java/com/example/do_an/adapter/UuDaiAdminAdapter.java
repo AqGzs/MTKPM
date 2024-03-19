@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.do_an.R;
 import com.example.do_an.model.UuDaiModel;
-import com.example.do_an.ui.UuDaiAdminActivity;
+import com.example.do_an.ui.EndowAdminActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

@@ -6,16 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.do_an.R;
 import com.example.do_an.adapter.TransHisAdapter;
 import com.example.do_an.model.ThongBaoModel;
-import com.example.do_an.model.TransactionInfo;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -24,7 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class LichSuGiaoDichActivity extends AppCompatActivity {
+public class TradingHistoryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TransHisAdapter adapter;
     private FirebaseFirestore db;

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class SoDuViActivity extends AppCompatActivity {
+public class WalletBalanceActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     TextView soDuTextView;
     private ImageButton bck_sdv_admin;
@@ -48,15 +47,7 @@ public class SoDuViActivity extends AppCompatActivity {
             }
         });
         soDuTextView = findViewById(R.id.chitietsodu_admin);
-//        Intent intent = getIntent();
-//        if (intent != null && intent.hasExtra("ACCOUNT_ID")) {
-//            accountId = intent.getStringExtra("ACCOUNT_ID");
-//            Log.d("SoDuViActivity", "Received Account ID: " + accountId);
-////            String numericAccountId = accountId.replace("CN", "");
-//            Log.d("SoDuViActivity", "Numeric Account ID: " + accountId);
-//            fetchSoDuFromFirestore(phoneNumber);
-//            Log.d("Numeric Account ID", accountId);
-//        }
+
         fetchSoDuFromFirestore(phoneNumber);
     }
     private void fetchSoDuFromFirestore(String phoneNumber) {
@@ -74,12 +65,12 @@ public class SoDuViActivity extends AppCompatActivity {
                                 else
                                     soDuTextView.setText("Số dư ví: " + String.format("%,d", soDu) + "đ");
                             } else {
-                                Log.d("SoDuViActivity", "TaikhoanID: " + phoneNumber);
+                                Log.d("WalletBalanceActivity", "TaikhoanID: " + phoneNumber);
                                 // Xử lý khi tài liệu không tồn tại
-                                Log.d("SoDuViActivity", "Document does not exist");
+                                Log.d("WalletBalanceActivity", "Document does not exist");
                             }
                         } else {
-                            Log.d("SoDuViActivity", "Error getting documents: ", task.getException());
+                            Log.d("WalletBalanceActivity", "Error getting documents: ", task.getException());
                             // Xử lý khi không thể lấy dữ liệu từ Firestore
                         }
                     }

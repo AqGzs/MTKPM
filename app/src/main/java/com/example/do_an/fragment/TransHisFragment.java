@@ -16,7 +16,7 @@ import com.example.do_an.R;
 import com.example.do_an.adapter.ThongBaoAdapter;
 import com.example.do_an.adapter.TransHisAdapter;
 import com.example.do_an.model.ThongBaoModel;
-import com.example.do_an.ui.ThongkeActivity;
+import com.example.do_an.ui.StatisticalActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -50,7 +50,7 @@ public class TransHisFragment extends Fragment {
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ThongkeActivity.class);
+                Intent intent = new Intent(getActivity(), StatisticalActivity.class);
                 startActivity(intent);
             }
         });

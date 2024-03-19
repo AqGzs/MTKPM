@@ -46,14 +46,14 @@ public class DetailTkActivity extends AppCompatActivity {
         vi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailTkActivity.this, SoDuViActivity.class);
+                Intent intent = new Intent(DetailTkActivity.this, WalletBalanceActivity.class);
                 startActivity(intent);
             }
         });
         ttcnadmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailTkActivity.this, ThongTinCaNhanActivity.class);
+                Intent intent = new Intent(DetailTkActivity.this, PersonalInformationActivity.class);
                 intent.putExtra("ACCOUNT_ID", accountId); // accountId là một String
                 startActivity(intent);
             }
@@ -61,7 +61,7 @@ public class DetailTkActivity extends AppCompatActivity {
         lsgdadmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailTkActivity.this, LichSuGiaoDichActivity.class);
+                Intent intent = new Intent(DetailTkActivity.this, TradingHistoryActivity.class);
                 startActivity(intent);
             }
         });

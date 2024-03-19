@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class ThongKeAdminActivity extends AppCompatActivity {
+public class StatisticalAdminActivity extends AppCompatActivity {
 
     private BarChart barChart;
     private PieChart pieChart;

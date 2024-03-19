@@ -18,7 +18,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ThongTinCaNhanActivity extends AppCompatActivity {
+public class PersonalInformationActivity extends AppCompatActivity {
     private TextView hoten;
     private TextView gioitinh;
     private TextView ngaysinh;
@@ -86,7 +86,7 @@ public class ThongTinCaNhanActivity extends AppCompatActivity {
                             cccd.setText(cccD);
                             email.setText(eMail);
                             diachi.setText(diaChi);
-                            Log.d("ThongTinCaNhanActivity", "ACCOUNT_ID: " + accountId);
+                            Log.d("PersonalInformationActivity", "ACCOUNT_ID: " + accountId);
                             // Gán các giá trị khác cho các TextViews tương ứng
                         }
                     }

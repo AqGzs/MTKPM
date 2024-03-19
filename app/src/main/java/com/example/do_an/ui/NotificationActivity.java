@@ -21,8 +21,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ThongbaoActivity extends AppCompatActivity {
-    private static final String TAG = "ThongbaoActivity";
+public class NotificationActivity extends AppCompatActivity {
+    private static final String TAG = "NotificationActivity";
     RecyclerView recyclerView;
     ImageButton btnNofBack;
 

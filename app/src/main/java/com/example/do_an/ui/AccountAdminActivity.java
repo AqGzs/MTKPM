@@ -12,9 +12,7 @@ import android.os.Bundle;
 
 import com.example.do_an.R;
 import com.example.do_an.adapter.AccountAdapter;
-import com.example.do_an.adapter.ThongBaoAdapter;
 import com.example.do_an.model.AccountModel;
-import com.example.do_an.model.ThongBaoModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,7 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaiKhoanAdminActivity extends AppCompatActivity {
+public class AccountAdminActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     private AccountAdapter accountAdapter;
@@ -41,7 +39,7 @@ public class TaiKhoanAdminActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        // Trong onCreate() của TaiKhoanAdminActivity
+        // Trong onCreate() của AccountAdminActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         accountAdapter = new AccountAdapter(); // Khởi tạo adapter của bạn
@@ -50,8 +48,8 @@ public class TaiKhoanAdminActivity extends AppCompatActivity {
         accountAdapter.setOnItemClickListener(new AccountAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(AccountModel account) {
-                // Tạo Intent để chuyển từ TaiKhoanAdminActivity sang DetailTkActivity
-                Intent intent = new Intent(TaiKhoanAdminActivity.this, DetailTkActivity.class);
+                // Tạo Intent để chuyển từ AccountAdminActivity sang DetailTkActivity
+                Intent intent = new Intent(AccountAdminActivity.this, DetailTkActivity.class);
                 // Đặt thông tin tài khoản để chuyển sang DetailTkActivity (nếu cần thiết)
                 intent.putExtra("ACCOUNT_ID", account.getMaTTCN());
                 startActivity(intent);

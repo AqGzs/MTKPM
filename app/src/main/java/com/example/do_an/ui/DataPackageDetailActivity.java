@@ -8,8 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.do_an.R;
 import com.example.do_an.model.MenuCollection;
-import com.example.do_an.model.TransactionInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,9 +28,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class ChiTietGoiDataActivity extends AppCompatActivity {
+public class DataPackageDetailActivity extends AppCompatActivity {
 
-    private ImageButton dedataback;
+    private ImageButton thoattrangDuLieu;
     private Button btbBuyData;
     private TextView iddata;
     private MenuCollection menuCollection;
@@ -46,7 +43,7 @@ public class ChiTietGoiDataActivity extends AppCompatActivity {
         MenuCollection menuCollection = getIntent().getParcelableExtra("menuCollection");
 
         iddata = findViewById(R.id.iddata);
-        dedataback = findViewById(R.id.dedataback);
+        thoattrangDuLieu = findViewById(R.id.dedataback);
         btbBuyData = findViewById(R.id.btnBuyData);
         String title = getIntent().getStringExtra("title");
         TextView dataprice = findViewById(R.id.dataprice);
@@ -66,7 +63,7 @@ public class ChiTietGoiDataActivity extends AppCompatActivity {
 
                 updateBalance(userId, price);
                 updateNotification(iddataString, title, currentData, hour);
-                Intent intent = new Intent(ChiTietGoiDataActivity.this, PaymentSuccessActivity.class);
+                Intent intent = new Intent(DataPackageDetailActivity.this, PaymentSuccessActivity.class);
 
                 intent.putExtra("dataprice", title);
 
@@ -76,7 +73,7 @@ public class ChiTietGoiDataActivity extends AppCompatActivity {
             }
         });
 
-        dedataback.setOnClickListener(new View.OnClickListener() {
+        thoattrangDuLieu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -130,24 +127,24 @@ public class ChiTietGoiDataActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 // Hiển thị thông báo số dư đã được cập nhật thành công
-                                                Toast.makeText(ChiTietGoiDataActivity.this, "Số dư đã được cập nhật!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(DataPackageDetailActivity.this, "Số dư đã được cập nhật!", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 // Xử lý khi cập nhật không thành công
-                                                Toast.makeText(ChiTietGoiDataActivity.this, "Lỗi khi cập nhật số dư: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(DataPackageDetailActivity.this, "Lỗi khi cập nhật số dư: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
                         } else {
                             // Hiển thị thông báo nếu số dư không đủ
-                            Toast.makeText(ChiTietGoiDataActivity.this, "Số dư không đủ!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DataPackageDetailActivity.this, "Số dư không đủ!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         // Hiển thị thông báo nếu không tìm thấy người dùng
-                        Toast.makeText(ChiTietGoiDataActivity.this, "Không tìm thấy người dùng!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DataPackageDetailActivity.this, "Không tìm thấy người dùng!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     // Hiển thị thông báo khi có lỗi truy cập dữ liệu
-                    Toast.makeText(ChiTietGoiDataActivity.this, "Lỗi khi truy cập dữ liệu: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DataPackageDetailActivity.this, "Lỗi khi truy cập dữ liệu: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -163,10 +160,10 @@ public class ChiTietGoiDataActivity extends AppCompatActivity {
 
         db.collection("TransactionInfo").add(notificationMap)
                 .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(ChiTietGoiDataActivity.this, "Thông tin đã được đẩy lên Firebase", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DataPackageDetailActivity.this, "Thông tin đã được đẩy lên Firebase", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(ChiTietGoiDataActivity.this, "Lỗi khi đẩy thông tin lên Firebase: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DataPackageDetailActivity.this, "Lỗi khi đẩy thông tin lên Firebase: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 }

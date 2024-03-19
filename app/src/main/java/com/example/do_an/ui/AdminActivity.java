@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.do_an.R;
 
 public class AdminActivity extends AppCompatActivity {
-    private TextView logout_admin;
+    private TextView admin_dangxuat;
 
     LinearLayout taikhoan, uudai, phanhoi, thongke;
     @SuppressLint("MissingInflatedId")
@@ -25,7 +25,7 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        logout_admin = findViewById(R.id.logout_admin);
+        admin_dangxuat = findViewById(R.id.logout_admin);
         taikhoan = findViewById(R.id.taikhoan_admin);
         uudai = findViewById(R.id.uudai_admin);
         phanhoi = findViewById(R.id.phanhoi_admin);
@@ -34,32 +34,25 @@ public class AdminActivity extends AppCompatActivity {
         taikhoan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminActivity.this, TaiKhoanAdminActivity.class);
+                Intent intent = new Intent(AdminActivity.this, AccountAdminActivity.class);
                 startActivity(intent);
             }
         });
         uudai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminActivity.this, UuDaiAdminActivity.class);
+                Intent intent = new Intent(AdminActivity.this, EndowAdminActivity.class);
                 startActivity(intent);
             }
         });
-//        phanhoi.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(AdminActivity.this, PhanHoiAdminActivity.class);
-//                startActivity(intent);
-//            }
-//        });
         thongke.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminActivity.this, ThongKeAdminActivity.class);
+                Intent intent = new Intent(AdminActivity.this, StatisticalAdminActivity.class);
                 startActivity(intent);
             }
         });
-        logout_admin.setOnClickListener(new View.OnClickListener() {
+        admin_dangxuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog();
