@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.do_an.model.UserInfo;
 
@@ -16,6 +15,7 @@ public class UserInfoDataSource {
     private SQLiteDatabase database;
     private MyDatabaseHelper dbHelper;
 
+    // Các cột trong bảng ThongTinCaNhan
     private String[] allColumns = {
             MyDatabaseHelper.ThongTinCaNhanTable.MA_TTCN,
             MyDatabaseHelper.ThongTinCaNhanTable.HO_TEN,
@@ -31,24 +31,27 @@ public class UserInfoDataSource {
         dbHelper = new MyDatabaseHelper(context);
     }
 
+    // Mở kết nối đến cơ sở dữ liệu
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
     }
 
+    // Đóng kết nối đến cơ sở dữ liệu
     public void close() {
         dbHelper.close();
     }
 
-    public UserInfo createUserInfo(String MaTTCN, String HoTen, String Email, String GioiTinh, String NgaySinh, String cccd, String diaChi, int matkhau) {
+    // Tạo một bản ghi mới trong bảng ThongTinCaNhan
+    public UserInfo createUserInfo(String maTTCN, String hoTen, String email, String gioiTinh, String ngaySinh, String CCCD, String diaChi, int matKhau) {
         ContentValues values = new ContentValues();
-        values.put(MyDatabaseHelper.ThongTinCaNhanTable.MA_TTCN, MaTTCN);
-        values.put(MyDatabaseHelper.ThongTinCaNhanTable.HO_TEN, HoTen);
-        values.put(MyDatabaseHelper.ThongTinCaNhanTable.EMAIL, Email);
-        values.put(MyDatabaseHelper.ThongTinCaNhanTable.GIOI_TINH, GioiTinh);
-        values.put(MyDatabaseHelper.ThongTinCaNhanTable.NGAY_SINH, NgaySinh);
-        values.put(MyDatabaseHelper.ThongTinCaNhanTable.CCCD_OR_CMND, cccd);
+        values.put(MyDatabaseHelper.ThongTinCaNhanTable.MA_TTCN, maTTCN);
+        values.put(MyDatabaseHelper.ThongTinCaNhanTable.HO_TEN, hoTen);
+        values.put(MyDatabaseHelper.ThongTinCaNhanTable.EMAIL, email);
+        values.put(MyDatabaseHelper.ThongTinCaNhanTable.GIOI_TINH, gioiTinh);
+        values.put(MyDatabaseHelper.ThongTinCaNhanTable.NGAY_SINH, ngaySinh);
+        values.put(MyDatabaseHelper.ThongTinCaNhanTable.CCCD_OR_CMND, CCCD);
         values.put(MyDatabaseHelper.ThongTinCaNhanTable.DIA_CHI, diaChi);
-        values.put(MyDatabaseHelper.ThongTinCaNhanTable.MAT_KHAU, matkhau);
+        values.put(MyDatabaseHelper.ThongTinCaNhanTable.MAT_KHAU, matKhau);
 
         long insertId = database.insert(MyDatabaseHelper.ThongTinCaNhanTable.TABLE_NAME, null, values);
 
@@ -61,12 +64,12 @@ public class UserInfoDataSource {
             cursor.close();
             return newUserInfo;
         } else {
-            // Handle the case when the insert is not successful (optional, depending on your app's logic)
+            // Xử lý trường hợp không thành công (tuỳ thuộc vào logic ứng dụng của bạn)
             return null;
         }
     }
 
-
+    // Cập nhật thông tin của một người dùng
     public void updateUserInfo(UserInfo userInfo, String maTTCN, String hoTen, String email, String gioiTinh, String ngaySinh, String CCCD, String diaChi, int matKhau) {
         ContentValues values = new ContentValues();
         values.put(MyDatabaseHelper.ThongTinCaNhanTable.MA_TTCN, maTTCN);
@@ -83,6 +86,7 @@ public class UserInfoDataSource {
         database.update(MyDatabaseHelper.ThongTinCaNhanTable.TABLE_NAME, values, whereClause, whereArgs);
     }
 
+    // Lấy tất cả thông tin người dùng từ cơ sở dữ liệu
     public List<UserInfo> getAllUserInfos() {
         List<UserInfo> userInfos = new ArrayList<>();
         Cursor cursor = database.query(MyDatabaseHelper.ThongTinCaNhanTable.TABLE_NAME,
@@ -97,6 +101,7 @@ public class UserInfoDataSource {
         return userInfos;
     }
 
+    // Chuyển dữ liệu từ con trỏ sang đối tượng UserInfo
     private UserInfo cursorToUserInfo(Cursor cursor) {
         UserInfo userInfo = new UserInfo();
         userInfo.setMaTTCN(cursor.getString(0));

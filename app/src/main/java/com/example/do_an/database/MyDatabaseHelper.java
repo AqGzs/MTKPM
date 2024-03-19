@@ -6,11 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-
     private static final String DATABASE_NAME = "mydatabase.db";
-    private static final int DATABASE_VERSION = 23; // Tăng phiên bản cơ sở dữ liệu lên 2
+    private static final int DATABASE_VERSION = 23; // Tăng phiên bản cơ sở dữ liệu lên 23
 
-    public class TaiKhoanTable {
+    // Bảng tài khoản
+    public static class TaiKhoanTable {
         public static final String TABLE_NAME = "tai_khoan";
         public static final String SO_TK = "so_tk";
         public static final String MA_TTCN = "ma_ttcn";
@@ -18,9 +18,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         public static final String SO_DU_TUI_THAN_TAI = "so_du_tui_than_tai";
     }
 
-
-
-    public class ThongTinCaNhanTable {
+    // Bảng thông tin cá nhân
+    public static class ThongTinCaNhanTable {
         public static final String TABLE_NAME = "thong_tin_ca_nhan";
         public static final String MA_TTCN = "ma_ttcn";
         public static final String HO_TEN = "ho_ten";
@@ -32,9 +31,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         public static final String MAT_KHAU = "mat_khau";
     }
 
-
-
-    // Câu lệnh tạo bảng user_info
+    // Câu lệnh tạo bảng tài khoản
     private String createTaiKhoanTable() {
         return "CREATE TABLE " + TaiKhoanTable.TABLE_NAME + " (" +
                 TaiKhoanTable.SO_TK + " INTEGER PRIMARY KEY, " +
@@ -45,20 +42,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 ThongTinCaNhanTable.TABLE_NAME + "(" + ThongTinCaNhanTable.MA_TTCN + "))";
     }
 
-
+    // Câu lệnh tạo bảng thông tin cá nhân
     private String createThongTinCaNhanTable() {
         return "CREATE TABLE " + ThongTinCaNhanTable.TABLE_NAME + " (" +
-                ThongTinCaNhanTable.MA_TTCN + " text PRIMARY KEY, " +
-                ThongTinCaNhanTable.HO_TEN + " text, " +
-                ThongTinCaNhanTable.EMAIL + " text, " +
-                ThongTinCaNhanTable.GIOI_TINH + " text, " +
+                ThongTinCaNhanTable.MA_TTCN + " TEXT PRIMARY KEY, " +
+                ThongTinCaNhanTable.HO_TEN + " TEXT, " +
+                ThongTinCaNhanTable.EMAIL + " TEXT, " +
+                ThongTinCaNhanTable.GIOI_TINH + " TEXT, " +
                 ThongTinCaNhanTable.NGAY_SINH + " DATE, " +
                 ThongTinCaNhanTable.CCCD_OR_CMND + " INT, " +
-                ThongTinCaNhanTable.DIA_CHI + " text, " +
+                ThongTinCaNhanTable.DIA_CHI + " TEXT, " +
                 ThongTinCaNhanTable.MAT_KHAU + " INTEGER NOT NULL)";
     }
-
-
 
     public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -66,7 +61,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Tạo bảng users
+        // Tạo bảng tài khoản và bảng thông tin cá nhân
         db.execSQL(createTaiKhoanTable());
         db.execSQL(createThongTinCaNhanTable());
     }
@@ -79,5 +74,3 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 }
-
-

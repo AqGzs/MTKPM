@@ -5,10 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.do_an.model.User;
-import com.example.do_an.model.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,7 @@ public class UserDataSource {
     private SQLiteDatabase database;
     private MyDatabaseHelper dbHelper;
 
-    // Define the columns for the TaiKhoanTable
+    // Các cột của bảng TaiKhoan
     private String[] taiKhoanColumns = {
             MyDatabaseHelper.TaiKhoanTable.SO_TK,
             MyDatabaseHelper.TaiKhoanTable.MA_TTCN,
@@ -25,51 +23,40 @@ public class UserDataSource {
             MyDatabaseHelper.TaiKhoanTable.SO_DU_TUI_THAN_TAI
     };
 
-    // Define the columns for the UserInfoTable
-    private String[] userInfoColumns = {
-            MyDatabaseHelper.ThongTinCaNhanTable.MA_TTCN,
-            MyDatabaseHelper.ThongTinCaNhanTable.HO_TEN,
-            MyDatabaseHelper.ThongTinCaNhanTable.EMAIL,
-            MyDatabaseHelper.ThongTinCaNhanTable.GIOI_TINH,
-            MyDatabaseHelper.ThongTinCaNhanTable.NGAY_SINH,
-            MyDatabaseHelper.ThongTinCaNhanTable.CCCD_OR_CMND,
-            MyDatabaseHelper.ThongTinCaNhanTable.DIA_CHI,
-            MyDatabaseHelper.ThongTinCaNhanTable.MAT_KHAU
-    };
-
     public UserDataSource(Context context) {
         dbHelper = new MyDatabaseHelper(context);
     }
 
+    // Mở kết nối đến cơ sở dữ liệu
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
     }
 
+    // Đóng kết nối đến cơ sở dữ liệu
     public void close() {
         dbHelper.close();
     }
 
-    public User createUser(long SoTK) {
-        // Insert values into the TaiKhoanTable
+    // Tạo mới một tài khoản người dùng
+    public User createUser(long soTK) {
+        // Thêm giá trị vào bảng TaiKhoan
         ContentValues taiKhoanValues = new ContentValues();
-        taiKhoanValues.put(MyDatabaseHelper.TaiKhoanTable.SO_TK, SoTK);
-        taiKhoanValues.put(MyDatabaseHelper.TaiKhoanTable.MA_TTCN, "CN" + SoTK);
-        taiKhoanValues.put(MyDatabaseHelper.TaiKhoanTable.SO_DU_VI, 0); // Set initial value for SO_DU_VI
-        taiKhoanValues.put(MyDatabaseHelper.TaiKhoanTable.SO_DU_TUI_THAN_TAI, 0); // Set initial value for SO_DU_TUI_THAN_TAI
+        taiKhoanValues.put(MyDatabaseHelper.TaiKhoanTable.SO_TK, soTK);
+        taiKhoanValues.put(MyDatabaseHelper.TaiKhoanTable.MA_TTCN, "CN" + soTK);
+        taiKhoanValues.put(MyDatabaseHelper.TaiKhoanTable.SO_DU_VI, 0); // Thiết lập giá trị ban đầu cho SO_DU_VI
+        taiKhoanValues.put(MyDatabaseHelper.TaiKhoanTable.SO_DU_TUI_THAN_TAI, 0); // Thiết lập giá trị ban đầu cho SO_DU_TUI_THAN_TAI
         long taiKhoanInsertId = database.insert(MyDatabaseHelper.TaiKhoanTable.TABLE_NAME, null, taiKhoanValues);
 
-        // Create a new User object with the provided SoTK and "CN" + SoTK as MaTTCN
+        // Tạo một đối tượng User mới với soTK và "CN" + soTK làm MaTTCN
         User newUser = new User();
-        newUser.setId(SoTK);
-        newUser.setMaTTCN("CN" + SoTK);
-        newUser.setSoduvi(0); // Set initial value for SO_DU_VI
-        newUser.setSodutuithantai(0); // Set initial value for SO_DU_TUI_THAN_TAI
+        newUser.setId(soTK);
+        newUser.setMaTTCN("CN" + soTK);
+        newUser.setSoduvi(0); // Thiết lập giá trị ban đầu cho SO_DU_VI
+        newUser.setSodutuithantai(0); // Thiết lập giá trị ban đầu cho SO_DU_TUI_THAN_TAI
         return newUser;
     }
 
-    // Rest of the methods remain the same...
-
-
+    // Lấy tất cả người dùng từ cơ sở dữ liệu
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
 
@@ -86,6 +73,8 @@ public class UserDataSource {
 
         return users;
     }
+
+    // Chuyển dữ liệu từ con trỏ sang đối tượng User
     private User cursorToUser(Cursor cursor) {
         User user = new User();
         user.setId(cursor.getLong(0));

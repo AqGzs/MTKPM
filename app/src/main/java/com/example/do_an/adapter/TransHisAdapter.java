@@ -14,44 +14,51 @@ import com.example.do_an.model.ThongBaoModel;
 import java.util.List;
 
 public class TransHisAdapter extends RecyclerView.Adapter<TransHisAdapter.ViewHolder> {
-    private List<ThongBaoModel> transactionList;
+    private List<ThongBaoModel> danhSachGiaoDich; // Thay đổi tên biến để phản ánh ý nghĩa
 
-    public TransHisAdapter(List<ThongBaoModel> transactionList) {
-        this.transactionList = transactionList;
+    public TransHisAdapter(List<ThongBaoModel> danhSachGiaoDich) {
+        this.danhSachGiaoDich = danhSachGiaoDich;
     }
+
+    // Tạo ViewHolder mới khi cần thiết
     @NonNull
     @Override
-    public TransHisAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.transhis, parent, false);
         return new ViewHolder(view);
     }
 
+    // Liên kết dữ liệu với ViewHolder
     @Override
-    public void onBindViewHolder(@NonNull TransHisAdapter.ViewHolder holder, int position) {
-        ThongBaoModel transaction = transactionList.get(position);
-        holder.bind(transaction);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ThongBaoModel giaoDich = danhSachGiaoDich.get(position);
+        holder.bind(giaoDich);
     }
 
+    // Trả về số lượng mục trong danh sách giao dịch
     @Override
     public int getItemCount() {
-        return transactionList.size();
+        return danhSachGiaoDich.size();
     }
 
+    // ViewHolder để giữ các thành phần giao diện của mỗi mục
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView titletran, pricetran, date, hour;
+        private TextView tieuDeGiaoDich, giaTienGiaoDich, ngay, gio;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            titletran = itemView.findViewById(R.id.title_transhis);
-            pricetran = itemView.findViewById(R.id.tien_transhis);
-            date = itemView.findViewById(R.id.ngay_transhis);
-            hour = itemView.findViewById(R.id.gio_transhis);
+            tieuDeGiaoDich = itemView.findViewById(R.id.title_transhis);
+            giaTienGiaoDich = itemView.findViewById(R.id.tien_transhis);
+            ngay = itemView.findViewById(R.id.ngay_transhis);
+            gio = itemView.findViewById(R.id.gio_transhis);
         }
-        public void bind(ThongBaoModel transaction) {
-            titletran.setText(transaction.getTitle() + " thành công");
-            pricetran.setText(transaction.getPrice());
-            date.setText(transaction.getDate());
-            hour.setText(transaction.getHour());
+
+        // Gán dữ liệu từ đối tượng ThongBaoModel vào các thành phần giao diện
+        public void bind(ThongBaoModel giaoDich) {
+            tieuDeGiaoDich.setText(giaoDich.getTitle() + " thành công");
+            giaTienGiaoDich.setText(giaoDich.getPrice());
+            ngay.setText(giaoDich.getDate());
+            gio.setText(giaoDich.getHour());
         }
     }
 }

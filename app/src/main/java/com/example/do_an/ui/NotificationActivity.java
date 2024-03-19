@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.do_an.R;
-import com.example.do_an.adapter.ThongBaoAdapter;
+import com.example.do_an.adapter.NotificationAdapter;
 import com.example.do_an.model.ThongBaoModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -72,7 +72,7 @@ public class NotificationActivity extends AppCompatActivity {
                         });
 
                         // Cập nhật RecyclerView thông qua Adapter
-                        ThongBaoAdapter adapter = new ThongBaoAdapter(thongBaoList);
+                        NotificationAdapter adapter = new NotificationAdapter(thongBaoList);
                         recyclerView.setAdapter(adapter);
                     } else {
                         Log.d(TAG, "Error getting documents: ", task.getException());

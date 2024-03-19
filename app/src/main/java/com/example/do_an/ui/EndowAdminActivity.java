@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.do_an.R;
-import com.example.do_an.adapter.UuDaiAdminAdapter;
+import com.example.do_an.adapter.EndowAdminAdapter;
 import com.example.do_an.model.UuDaiModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -83,7 +83,7 @@ public class EndowAdminActivity extends AppCompatActivity {
 
     private void updateRecyclerView(List<UuDaiModel> uuDaiList) {
         // Khởi tạo adapter và gắn vào RecyclerView
-        UuDaiAdminAdapter uuDaiAdminAdapter = new UuDaiAdminAdapter(uuDaiList, this);
+        EndowAdminAdapter uuDaiAdminAdapter = new EndowAdminAdapter(uuDaiList, this);
         recyclerView.setAdapter(uuDaiAdminAdapter);
     }
 
