@@ -21,24 +21,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.do_an.MainActivity;
+
 import com.example.do_an.R;
 import com.example.do_an.ui.EnterSdtActivity;
-import com.example.do_an.ui.LoginActivity;
 import com.example.do_an.ui.LoginAndSecurityActivity;
 import com.example.do_an.ui.PersonalPageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.concurrent.ExecutionException;
 
-/**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
- */
+
+
 public class SettingFragment extends Fragment {
     Button btlogout;
     TextView nameUser, phoneNumber1;
@@ -55,16 +50,13 @@ public class SettingFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("my_phone", Context.MODE_PRIVATE);
         String phoneNumber = sharedPreferences.getString("PHONE_NUMBER", "");
+
         nameUser = view.findViewById(R.id.nameUser);
         phoneNumber1 = view.findViewById(R.id.phoneNumber1);
         phoneNumber1.setText(phoneNumber);
-        getName(phoneNumber).observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String hoTen) {
-                // Use the hoTen value here or perform any action based on the result
-                if(!hoTen.equals(""))
-                    nameUser.setText(hoTen);
-            }
+        getName(phoneNumber).observe(getViewLifecycleOwner(), hoTen -> {
+            if (!hoTen.equals(""))
+                nameUser.setText(hoTen);
         });
         btlogout = view.findViewById(R.id.out);
         userPage = view.findViewById(R.id.userPage);

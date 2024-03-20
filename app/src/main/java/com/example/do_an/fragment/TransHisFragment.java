@@ -42,13 +42,7 @@ public class TransHisFragment extends Fragment {
 
         fetchDataFromFirestore();
 
-        report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), StatisticalActivity.class);
-                startActivity(intent);
-            }
-        });
+        report.setOnClickListener(v -> startActivity(new Intent(getActivity(), StatisticalActivity.class)));
 
         return view;
     }
