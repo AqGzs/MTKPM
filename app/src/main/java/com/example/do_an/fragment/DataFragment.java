@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.do_an.R;
 import com.example.do_an.adapter.DataAdapter;
 import com.example.do_an.model.MenuCollection;
-import com.example.do_an.ui.ChiTietGoiDataActivity;
+import com.example.do_an.ui.DataPackageDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +65,7 @@ public class DataFragment extends Fragment {
         DataAdapter adapter = new DataAdapter(lstData, requireContext(), new DataAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MenuCollection menuCollection, String title) {
-                Intent intent = new Intent(requireContext(), ChiTietGoiDataActivity.class);
+                Intent intent = new Intent(requireContext(), DataPackageDetailActivity.class);
                 intent.putExtra("title", title);
                 startActivity(intent);
             }
