@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 
 import com.example.do_an.R;
 import com.example.do_an.adapter.NotificationAdapter;
+import com.example.do_an.DesignPattern.FirestoreSingleton;
 import com.example.do_an.model.ThongBaoModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -30,6 +31,7 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thongbao);
+        FirebaseFirestore db = FirestoreSingleton.getInstance();
         btnNofBack = findViewById(R.id.btnNofBack);
         recyclerView = findViewById(R.id.recyclethongbao);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -46,7 +48,7 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("TransactionInfo")
                 .get()
                 .addOnCompleteListener(task -> {

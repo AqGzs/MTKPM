@@ -15,6 +15,7 @@ import com.example.do_an.adapter.AccountAdapter;
 import com.example.do_an.model.AccountModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.example.do_an.DesignPattern.FirestoreSingleton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -59,6 +60,7 @@ public class AccountAdminActivity extends AppCompatActivity {
         fetchDataFromFirestore();
     }
     private void fetchDataFromFirestore() {
+        FirebaseFirestore db = FirestoreSingleton.getInstance();
         db.collection("UsersInfo")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
