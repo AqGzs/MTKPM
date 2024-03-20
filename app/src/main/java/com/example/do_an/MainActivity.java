@@ -10,8 +10,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-//import com.example.do_an.fragment.HomeFragment;
+import com.example.do_an.DesignPattern.FragmentFactory;
 import com.example.do_an.fragment.HomeFragment;
 
 import com.example.do_an.fragment.SettingFragment;
@@ -31,48 +30,22 @@ public class MainActivity extends AppCompatActivity {
         mnBottom = findViewById(R.id.navmenu);
         mnBottom.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-        HomeFragment fragment = new HomeFragment();
-        loadFragment(fragment);
-        mnBottom.setOnItemSelectedListener(getListener());
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == android.R.id.home)
-        {
-            Intent i = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(i);
-            finish();
-            return true;
+        if (actionBar != null) {
+            actionBar.hide();
         }
-        return true;
-    }
 
-    @NonNull
-    private NavigationBarView.OnItemSelectedListener getListener() {
-        return new NavigationBarView.OnItemSelectedListener() {
+        // Load the default fragment when the activity is created
+        loadFragment(FragmentFactory.getFragment(R.id.mnHome));
+
+        mnBottom.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId())
-                {
-                    case R.id.mnHome:
-                        loadFragment(new HomeFragment());
-                        break;
-                    case R.id.mnUuDai:
-                        loadFragment(new UuDaiFragment());
-                        break;
-                    case R.id.LSGD:
-                        loadFragment(new TransHisFragment());
-                        break;
-
-                    case R.id.mnViCuaToi:
-                        loadFragment(new SettingFragment());
-                        break;
-                }
+                // Use the FragmentFactory to get the fragment corresponding to the selected item
+                Fragment fragment = FragmentFactory.getFragment(item.getItemId());
+                loadFragment(fragment);
                 return true;
             }
-        };
+        });
     }
     void loadFragment(Fragment fmNew)
     {
